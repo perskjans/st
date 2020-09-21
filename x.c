@@ -63,6 +63,8 @@ typedef struct {
 #define XK_SWITCH_MOD (1<<13)
 
 /* function definitions used in config.h */
+static char inputmodeactive;
+
 static void clipcopy(const Arg *);
 static void clippaste(const Arg *);
 static void numlock(const Arg *);
@@ -1883,8 +1885,16 @@ kpress(XEvent *ev)
 	/* 1. shortcuts */
 	for (bp = shortcuts; bp < shortcuts + LEN(shortcuts); bp++) {
 		if (ksym == bp->keysym && match(bp->mod, e->state)) {
-			bp->func(&(bp->arg));
-			return;
+			if (bp->arg.i == INPUT_TOGGLE_EVENT)
+			{
+				inputmodeactive = inputmodeactive ? 0 : 1;
+				return;
+			}
+			else if (inputmodeactive)
+			{
+				bp->func(&(bp->arg));
+				return;
+			}
 		}
 	}
 
