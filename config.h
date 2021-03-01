@@ -92,6 +92,32 @@ float alpha = 0.92;
 
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
+	"#073642", /* hard contrast: #1d2021 / soft contrast: #32302f */
+	"#dc322f",
+	"#859900",
+	"#b58900",
+	"#268bd2",
+	"#d33682",
+	"#2aa198",
+	"#eee8d5",
+
+	"#002236",
+	"#cb4b16",
+	"#586e75",
+	"#657b83",
+	"#839496",
+	"#6c71c4",
+	"#93a1a1",
+	"#fdf6e3",
+
+	[255] = 0,
+	/* more colors can be added after 255 to use with DefaultXX */
+	"#000000",   /* 256 -> bg */
+	"#af5f00",   /* 257 -> fg */
+	"#00ff00", /* 258 -> cursor */
+};
+#if 0
+static const char *colorname[] = {
 	"#282828", /* hard contrast: #1d2021 / soft contrast: #32302f */
 	"#cc241d",
 	"#98971a",
@@ -114,6 +140,7 @@ static const char *colorname[] = {
 	"#ebdbb2",   /* 257 -> fg */
 	"#add8e6", /* 258 -> cursor */
 };
+#endif
 
 
 /*
@@ -217,11 +244,11 @@ MouseKey mkeys[] = {
 };
 
 static char *openurlcmd[] = { "/bin/sh", "-c",
-    "sed 's/.*│//g' | tr -d '\n' | grep -aEo '(((http|https)://|www\\.)[a-zA-Z0-9.]*[:]?[a-zA-Z0-9./&%?#=_-]*)|((magnet:\\?xt=urn:btih:)[a-zA-Z0-9]*)'| uniq | sed 's/^www./http:\\/\\/www\\./g' | dmenu -c -i -p 'Follow which url?' -l 10 | xargs -r xdg-open",
+    "sed 's/.*│//g' | tr -d '\n' | grep -aEo '(((http|https)://|www\\.)[a-zA-Z0-9.]*[:]?[a-zA-Z0-9./&%?#=_-]*)|((magnet:\\?xt=urn:btih:)[a-zA-Z0-9]*)'| uniq | sed 's/^www./http:\\/\\/www\\./g' | dmenu -i -p 'Follow which url?' -l 10 | xargs -r xdg-open",
     "externalpipe", NULL };
 
 static char *copyurlcmd[] = { "/bin/sh", "-c",
-    "sed 's/.*│//g' | tr -d '\n' | grep -aEo '(((http|https)://|www\\.)[a-zA-Z0-9.]*[:]?[a-zA-Z0-9./&%?#=_-]*)|((magnet:\\?xt=urn:btih:)[a-zA-Z0-9]*)' | uniq | sed 's/^www./http:\\/\\/www\\./g' | dmenu -c -i -p 'Copy which url?' -l 10 | tr -d '\n' | xclip -selection clipboard",
+    "sed 's/.*│//g' | tr -d '\n' | grep -aEo '(((http|https)://|www\\.)[a-zA-Z0-9.]*[:]?[a-zA-Z0-9./&%?#=_-]*)|((magnet:\\?xt=urn:btih:)[a-zA-Z0-9]*)' | uniq | sed 's/^www./http:\\/\\/www\\./g' | dmenu -i -p 'Copy which url?' -l 10 | tr -d '\n' | xclip -selection clipboard",
     "externalpipe", NULL };
 
 static char *copyoutput[] = { "/bin/sh", "-c", "st-copyout", "externalpipe", NULL };
